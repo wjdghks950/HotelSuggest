@@ -16,13 +16,10 @@ import 'package:flutter/material.dart';
 
 import 'home.dart';
 import 'login.dart';
-import 'signup.dart';
 import 'colors.dart';
-import 'supplemental/cut_corners_border.dart';
-import 'backdrop.dart';
-import 'model/product.dart';
+import 'signup.dart';
+import 'favorites.dart';
 
-// TODO: Convert ShrineApp to stateful widget (104)
 class ShrineApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -33,7 +30,11 @@ class ShrineApp extends StatelessWidget {
       routes:{
         '/login': (context) => LoginPage(),
         '/home': (context) => HomePage(),
-        
+        '/favorite': (context) => FavoritePage(),
+        '/signup': (context) => SignUp(),
+        //'/search': (context) => SearchPage(),
+        //'/ranking': (context) => RankingPage(),
+        //'/mypage': (context) => MyPage(),
       },
       onGenerateRoute: _getRoute,
       theme: _kShrineTheme,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'model/products_repository.dart';
-import 'package:intl/intl.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'model/product.dart';
 import 'home.dart';
+import 'favoritemodel.dart';
 
 class ProductDetail extends StatefulWidget{
   final Product product;
@@ -13,13 +13,11 @@ class ProductDetail extends StatefulWidget{
 }
 
 class _ProductState extends State<ProductDetail>{
-  Product product;
+  final Product product;
   _ProductState(this.product);
+
   @override
   Widget build(BuildContext context){
-    final NumberFormat formatter = NumberFormat.simpleCurrency(
-      locale: Localizations.localeOf(context).toString()
-    );
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -31,14 +29,24 @@ class _ProductState extends State<ProductDetail>{
         title: Text('Detail',
           style: TextStyle(color: Colors.white)),
       ),
-      body: Hero(
-        tag: product.name,
-          child: ListView(
+      body: ListView(
             children:[
-              Image.asset(
-                product.assetName,
-                package: product.assetPackage,
-                fit: BoxFit.fitWidth,
+              Stack(
+                children: [
+                  Hero(
+                    tag: product.name,
+                    child:Image.asset(
+                      product.assetName,
+                      package: product.assetPackage,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width - 50),
+                    child: _checkFavorite(product), // Favorite Button to store products in favorite list (e.g. saved)
+                  ),
+                ],
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -108,7 +116,7 @@ class _ProductState extends State<ProductDetail>{
                 child: Divider(height: 2.0, color: Colors.grey),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 20.0),
                 child:
                   Text(
                     product == null ? '' : product.description,
@@ -120,6 +128,14 @@ class _ProductState extends State<ProductDetail>{
               ),
             ],
         ),
+    );
+  }
+  Widget _checkFavorite(product){ // Returns the IconButton widget for details page and stores each product in saved list.
+    return ScopedModelDescendant<FavoriteList>(
+      builder: (context, child, favoritelist) => IconButton(
+        icon: Icon(favoritelist.saved.contains(product) ? Icons.favorite : Icons.favorite_border, 
+                  color: Colors.red),
+        onPressed: favoritelist.saved.contains(product) ? () => favoritelist.saved.remove(product) : () => favoritelist.add(product),
       ),
     );
   }

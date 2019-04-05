@@ -22,7 +22,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // TODO: Add text editing controllers (101)
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _validate = false;
@@ -67,25 +66,21 @@ class _LoginPageState extends State<LoginPage> {
             // TODO: Add button bar (101)
             ButtonBar(
               alignment: MainAxisAlignment.end,
-              // TODO: Add a beveled rectangular border to CANCEL (103)
               children: <Widget>[
                 Wrap(
-                // TODO: Add buttons (101)
                     children: [
                       FlatButton(
                         child: Text('CANCEL'),
                         onPressed: () {
                           _usernameController.clear();
-                          _passwordController.clear();// TODO: Clear the text fields (101)
+                          _passwordController.clear();
                         },
                       ),
-                      // TODO: Add an elevation to NEXT (103)
+
                       FlatButton(
                         child: Text('Sign Up'),
                         onPressed:(){
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => SignUp()),
-                          );
+                          Navigator.pushNamed(context, 'signup');
                         }
                       ),
                       RaisedButton(
@@ -95,9 +90,10 @@ class _LoginPageState extends State<LoginPage> {
                             _usernameController.text.isEmpty ? _validate = true : _validate = false;
                             _passwordController.text.isEmpty ? _validate = true : _validate = false;
                             // Show the next page
-                            if (!_validate){
+                            /* if (!_validate){
                               Navigator.pop(context);
-                            }
+                            } */
+                            Navigator.pop(context);
                           });
                         },
                       ),

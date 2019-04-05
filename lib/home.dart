@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import 'model/products_repository.dart';
 import 'model/product.dart';
 import 'menu.dart';
@@ -51,9 +49,6 @@ class HomePage extends StatelessWidget {
       return const <Card>[];
     }
     final ThemeData theme = Theme.of(context);
-    final NumberFormat formatter = NumberFormat.simpleCurrency(
-      locale: Localizations.localeOf(context).toString()
-    );
 
     return products.map((product){
       return Card(
@@ -127,7 +122,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ProductDetail(product: product,))),
+                        MaterialPageRoute(builder: (context) => ProductDetail(product: product))),
                     ),
                   ),
                 ),

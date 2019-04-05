@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'favorites.dart';
 
 class MenuBar extends StatelessWidget{
   @override
@@ -39,7 +40,7 @@ class MenuBar extends StatelessWidget{
             ),
             title: Text('Search'),
             onTap: (){
-              
+
             }
           ),
           ListTile(
@@ -50,7 +51,7 @@ class MenuBar extends StatelessWidget{
             ),
             title: Text('Favorite Hotel'),
             onTap: (){
-              
+              Navigator.pushNamed(context, '/favorite');
             }
           ),
           ListTile(

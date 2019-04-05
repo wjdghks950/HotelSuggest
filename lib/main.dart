@@ -13,7 +13,18 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
-
+import 'package:scoped_model/scoped_model.dart';
+import 'favoritemodel.dart';
 import 'package:Shrine/app.dart';
 
-void main() => runApp(ShrineApp());
+void main(){ 
+  final favorite = FavoriteList();
+
+  runApp(
+    ScopedModel<FavoriteList>( //Provide FavoriteList to widgets in our app
+      model: favorite,
+      child: ShrineApp()
+    )
+  );
+  
+  }
