@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'model/product.dart';
 import 'favoritemodel.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -12,12 +11,10 @@ class FavoritePage extends StatefulWidget{
 class _FavoriteState extends State<FavoritePage>{
   @override
   Widget build(BuildContext context){
-    //print(saved);
-    return MaterialApp(
-      title: 'Favorite Hotels',
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: Text('Favorite Hotels'),
+          title: Text('Favorite Hotels',
+            style: TextStyle(color: Colors.white)),
           centerTitle: true,
         ),
         body: ListView.builder(
@@ -27,8 +24,7 @@ class _FavoriteState extends State<FavoritePage>{
             return _buildRow(ScopedModel.of<FavoriteList>(context).saved[i]);
           }
         ),
-      ),
-    );
+      );
   }
   Widget _buildRow(product){ // build each row for favorites page
     return Dismissible(

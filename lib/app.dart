@@ -19,12 +19,15 @@ import 'login.dart';
 import 'colors.dart';
 import 'signup.dart';
 import 'favorites.dart';
+import 'search2.dart';
+import 'mypage.dart';
+import 'ranking.dart';
 
 class ShrineApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Shrine',
+      title: 'HotelsGuest',
       home: HomePage(),
       initialRoute: '/login',
       routes:{
@@ -32,9 +35,9 @@ class ShrineApp extends StatelessWidget {
         '/home': (context) => HomePage(),
         '/favorite': (context) => FavoritePage(),
         '/signup': (context) => SignUp(),
-        //'/search': (context) => SearchPage(),
-        //'/ranking': (context) => RankingPage(),
-        //'/mypage': (context) => MyPage(),
+        '/search': (context) => SearchPage(),
+        '/ranking': (context) => RankingPage(),
+        '/mypage': (context) => MyPage(),
       },
       onGenerateRoute: _getRoute,
       theme: _kShrineTheme,

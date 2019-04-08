@@ -20,10 +20,6 @@ class _ProductState extends State<ProductDetail>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {Navigator.pop(context);}
-        ),
         elevation: 0.0,
         centerTitle: true,
         title: Text('Detail',
@@ -135,7 +131,16 @@ class _ProductState extends State<ProductDetail>{
       builder: (context, child, favoritelist) => IconButton(
         icon: Icon(favoritelist.saved.contains(product) ? Icons.favorite : Icons.favorite_border, 
                   color: Colors.red),
-        onPressed: favoritelist.saved.contains(product) ? () => favoritelist.saved.remove(product) : () => favoritelist.add(product),
+        onPressed:(){ setState((){
+            if(favoritelist.saved.contains(product)){
+              favoritelist.saved.remove(product);
+            }
+            else{
+              favoritelist.add(product);
+            }
+          }
+          );
+        },
       ),
     );
   }

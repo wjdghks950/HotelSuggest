@@ -40,7 +40,7 @@ class MenuBar extends StatelessWidget{
             ),
             title: Text('Search'),
             onTap: (){
-
+              Navigator.pushNamed(context, '/search');
             }
           ),
           ListTile(
@@ -62,7 +62,7 @@ class MenuBar extends StatelessWidget{
             ),
             title: Text('Ranking'),
             onTap: (){
-              
+              Navigator.pushNamed(context, '/ranking');
             }
           ),
           ListTile(
@@ -73,7 +73,7 @@ class MenuBar extends StatelessWidget{
             ),
             title: Text('My Page'),
             onTap: (){
-              
+              Navigator.pushNamed(context, '/mypage');
             }
           ),
         ],
