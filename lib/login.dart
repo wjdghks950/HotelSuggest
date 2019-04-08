@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                       FlatButton(
                         child: Text('Sign Up'),
                         onPressed:(){
-                          Navigator.pushNamed(context, 'signup');
+                          Navigator.pushNamed(context, '/signup');
                         }
                       ),
                       RaisedButton(

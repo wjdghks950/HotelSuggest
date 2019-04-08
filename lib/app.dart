@@ -19,7 +19,7 @@ import 'login.dart';
 import 'colors.dart';
 import 'signup.dart';
 import 'favorites.dart';
-import 'search2.dart';
+import 'search.dart';
 import 'mypage.dart';
 import 'ranking.dart';
 
