@@ -19,6 +19,7 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.search),
             onPressed: () {
               print('Search button');
+              Navigator.pushNamed(context, '/search');
             },
           ),
           IconButton(

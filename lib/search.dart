@@ -81,6 +81,7 @@ class SearchPageState extends State<SearchPage> {
   int _location = 0;
   int _room = 0;
   bool _switchOn = false;
+  int _numStars = 0;
   TimeOfDay _inTime = TimeOfDay.now();
   TimeOfDay _outTime = TimeOfDay.now();
   DateTime _inDate = DateTime.now();
@@ -88,6 +89,8 @@ class SearchPageState extends State<SearchPage> {
   double _fee = 75.0;
 
   List<bool> _checkList = [false, false, false, false, false,];
+  List<String> _locations = ['Seoul', 'Busan', 'Daegu'];
+  List<String> _rooms = ['Single', 'Double', 'Family'];
 
   void _onLocationChange(int num){
     print('Pressed');
@@ -106,6 +109,7 @@ class SearchPageState extends State<SearchPage> {
   void _onClassChange(int i, bool decide){
     setState((){
       _checkList[i] = decide;
+      _numStars = i + 1;
     });
   }
   void _onSwitchChange(bool switcher){
@@ -144,7 +148,7 @@ class SearchPageState extends State<SearchPage> {
       });
     }
   }
-    Future<Null> _checkOutDateSetter(BuildContext context) async{
+  Future<Null> _checkOutDateSetter(BuildContext context) async{
     final DateTime date = await showDatePicker(
       context: context,
       initialDate: _outDate,
@@ -176,12 +180,24 @@ class SearchPageState extends State<SearchPage> {
       context: context,
       builder: (context){
         return AlertDialog(
-          title: Container(
-            child: Text('Please check your choice :)',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0),
-                  ),
+          title: Row(
+            children:[
+              Expanded(
+                child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height - 550.0,
+                color: Colors.blue,
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text('Please check your choice :)',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0),
+                      ),
+                ),
+              ),
+              ),
+            ],
           ),
           actions:[
             Padding(
@@ -196,7 +212,7 @@ class SearchPageState extends State<SearchPage> {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
-                        fontSize: 20.0
+                        fontSize: 20.0,
                       ),
                     ),
                     onPressed: Navigator.of(context).pop,
@@ -209,7 +225,7 @@ class SearchPageState extends State<SearchPage> {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
-                        fontSize: 20.0
+                        fontSize: 20.0,
                       ),
                     ),
                     onPressed: Navigator.of(context).pop,
@@ -222,7 +238,66 @@ class SearchPageState extends State<SearchPage> {
             padding: EdgeInsets.all(12.0),
             child: ListBody(
               children:[
-                Text('Implement!!!'),
+                Column(
+                  children: [
+                    Row(
+                      children:[
+                        Icon(Icons.location_on, color: Colors.blue),
+                        SizedBox(width: 60.0),
+                        Text(_locations[_location], style: TextStyle(fontSize: 15.0)),
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    Row(
+                      children:[
+                        Icon(Icons.credit_card, color: Colors.blue),
+                        SizedBox(width: 60.0),
+                        Text(_rooms[_room], style: TextStyle(fontSize: 15.0))
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    Row(
+                      children:[
+                        Icon(Icons.star, color: Colors.yellow),
+                        SizedBox(width: 30.0),
+                        buildStar(context, _numStars, false),
+                        Text('/'),
+                        buildStar(context, 5, false),
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
+                    Row(
+                      children:[
+                        Icon(Icons.calendar_today, color: Colors.blue),
+                        SizedBox(width: 20.0),
+                        Column(
+                          children:[
+                            Row(
+                              children:[
+                                Text('IN', style: TextStyle(fontSize: 10.0)),
+                                SizedBox(width: 10.0),
+                                Text(DateFormat('yyyy.MM.dd (E)').format(_inDate),
+                                  style: TextStyle(fontSize: 10.0)),
+                                Text(_inTime.format(context).toString(),
+                                  style: TextStyle(fontSize: 10.0)),
+                              ],
+                            ),
+                            Row(
+                              children:[
+                                Text('OUT', style: TextStyle(fontSize: 10.0)),
+                                SizedBox(width: 10.0),
+                                Text(DateFormat('yyyy.MM.dd (E)').format(_outDate), 
+                                  style: TextStyle(fontSize: 10.0)),
+                                Text(_outTime.format(context).toString(),
+                                  style: TextStyle(fontSize: 10.0)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -375,78 +450,83 @@ class SearchPageState extends State<SearchPage> {
                 );
               },
               isExpanded: _isExpandedList[2],
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 200.0,
-                    child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Checkbox(
-                        value: _checkList[0],
-                        activeColor: Colors.blue,
-                        onChanged: (bool decide) => _onClassChange(0, decide), 
+              body: Padding(
+                padding: EdgeInsets.fromLTRB(110.0, 0.0, 0.0, 0.0),
+                      child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 200.0,
+                      alignment: Alignment.center,
+                      child: Row(
+                      children: [
+                        Checkbox(
+                          value: _checkList[0],
+                          activeColor: Colors.blue,
+                          onChanged: (bool decide) => _onClassChange(0, decide), 
+                        ),
+                        buildStar(context, 1, false),
+                        ],
                       ),
-                      buildStar(context, 1, false),
-                      ],
                     ),
-                  ),
-                  Container(
-                    width: 200.0,
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Checkbox(
-                          value: _checkList[1],
-                          activeColor: Colors.blue,
-                          onChanged: (bool decide) => _onClassChange(1, decide),
-                        ),
-                        buildStar(context, 2, false),
-                      ],
+                    Container(
+                      width: 200.0,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: _checkList[1],
+                            activeColor: Colors.blue,
+                            onChanged: (bool decide) => _onClassChange(1, decide),
+                          ),
+                          buildStar(context, 2, false),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Checkbox(
-                          value: _checkList[2],
-                          activeColor: Colors.blue,
-                          onChanged: (bool decide) => _onClassChange(2, decide),
-                        ),
-                        buildStar(context, 3, false),
-                      ],
+                    Container(
+                      width: 200.0,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: _checkList[2],
+                            activeColor: Colors.blue,
+                            onChanged: (bool decide) => _onClassChange(2, decide),
+                          ),
+                          buildStar(context, 3, false),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Checkbox(
-                          value: _checkList[3],
-                          activeColor: Colors.blue,
-                          onChanged: (bool decide) => _onClassChange(3, decide),
-                        ),
-                        buildStar(context, 4, false),
-                      ],
+                    Container(
+                      width: 200.0,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: _checkList[3],
+                            activeColor: Colors.blue,
+                            onChanged: (bool decide) => _onClassChange(3, decide),
+                          ),
+                          buildStar(context, 4, false),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Checkbox(
-                          value: _checkList[4],
-                          activeColor: Colors.blue,
-                          onChanged: (bool decide) => _onClassChange(4, decide),
-                        ),
-                        buildStar(context, 5, false),
-                      ],
+                    Container(
+                      width: 200.0,
+                      alignment: Alignment.center,
+                      child: Row(
+                        children: [
+                          Checkbox(
+                            value: _checkList[4],
+                            activeColor: Colors.blue,
+                            onChanged: (bool decide) => _onClassChange(4, decide),
+                          ),
+                          buildStar(context, 5, false),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ]
@@ -499,15 +579,15 @@ class SearchPageState extends State<SearchPage> {
                     children: [
                       RaisedButton(
                         child: Text('select date'),
-                        color: _switchOn ? Colors.blue : Colors.grey,
+                        color: _switchOn ? Colors.grey : Colors.blue,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                        onPressed: () async => _switchOn ? _checkInDateSetter(context) : null,
+                        onPressed: () async => _switchOn ? null :  _checkInDateSetter(context),
                       ),
                       RaisedButton(
                         child: Text('select time'),
-                        color: _switchOn ? Colors.blue : Colors.grey,
+                        color: _switchOn ? Colors.grey : Colors.blue,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                        onPressed: () async => _switchOn ? _checkInTimeSetter(context) : null,
+                        onPressed: () async => _switchOn ? null : _checkInTimeSetter(context) ,
                       ),
                     ],
                   ),
@@ -540,15 +620,15 @@ class SearchPageState extends State<SearchPage> {
                     children: [
                       RaisedButton(
                         child: Text('select date'),
-                        color: _switchOn ? Colors.blue : Colors.grey,
+                        color: _switchOn ? Colors.grey : Colors.blue,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                        onPressed: () async => _switchOn ? _checkOutDateSetter(context) : null,
+                        onPressed: () async => _switchOn ? null : _checkOutDateSetter(context),
                       ),
                       RaisedButton(
                         child: Text('select time'),
-                        color: _switchOn ? Colors.blue : Colors.grey,
+                        color: _switchOn ? Colors.grey : Colors.blue,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                        onPressed: () async => _switchOn ?  _checkOutTimeSetter(context) : null,
+                        onPressed: () async => _switchOn ?  null : _checkOutTimeSetter(context),
                       ),
                     ],
                   ),
@@ -567,6 +647,8 @@ class SearchPageState extends State<SearchPage> {
                 children:[
                   SizedBox(width: 10.0),
                   Text('Fee', style: TextStyle(fontWeight: FontWeight.bold)),
+                  Spacer(),
+                  Text('$_fee'.substring(0,5)),
                   Spacer(),
                   Text('Up to \$150', style: TextStyle(fontSize: 12.0)),
                 ],
