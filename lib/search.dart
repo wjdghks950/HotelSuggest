@@ -2,17 +2,6 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'package:intl/intl.dart';
 
-enum Location {
-  Seoul,
-  Busan,
-  Daegu
-}
-enum Room{
-  Single,
-  Double,
-  Family
-}
-
 class DualHeaderWithHint extends StatelessWidget {
   const DualHeaderWithHint({
     this.name,
@@ -86,7 +75,7 @@ class SearchPageState extends State<SearchPage> {
   TimeOfDay _outTime = TimeOfDay.now();
   DateTime _inDate = DateTime.now();
   DateTime _outDate = DateTime.now();
-  double _fee = 75.0;
+  double _fee = 75.0000;
 
   List<bool> _checkList = [false, false, false, false, false,];
   List<String> _locations = ['Seoul', 'Busan', 'Daegu'];
@@ -123,7 +112,6 @@ class SearchPageState extends State<SearchPage> {
      print(_fee);
     });
   }
-
   Future<Null> _checkInDateSetter(BuildContext context) async{
     final DateTime date = await showDatePicker(
       context: context,
@@ -173,6 +161,33 @@ class SearchPageState extends State<SearchPage> {
         _outTime = time;
       });
     }
+  }
+
+  Widget showDateTime(){
+    return Column(
+                          children:[
+                            Row(
+                              children:[
+                                Text('IN', style: TextStyle(fontSize: 10.0)),
+                                SizedBox(width: 10.0),
+                                Text(DateFormat('yyyy.MM.dd (E)').format(_inDate),
+                                  style: TextStyle(fontSize: 10.0)),
+                                Text(_inTime.format(context).toString(),
+                                  style: TextStyle(fontSize: 10.0)),
+                              ],
+                            ),
+                            Row(
+                              children:[
+                                Text('OUT', style: TextStyle(fontSize: 10.0)),
+                                SizedBox(width: 10.0),
+                                Text(DateFormat('yyyy.MM.dd (E)').format(_outDate), 
+                                  style: TextStyle(fontSize: 10.0)),
+                                Text(_outTime.format(context).toString(),
+                                  style: TextStyle(fontSize: 10.0)),
+                              ],
+                            ),
+                          ],
+                        );
   }
 
   Future<void> _showSearchBox() async{
@@ -270,30 +285,7 @@ class SearchPageState extends State<SearchPage> {
                       children:[
                         Icon(Icons.calendar_today, color: Colors.blue),
                         SizedBox(width: 20.0),
-                        Column(
-                          children:[
-                            Row(
-                              children:[
-                                Text('IN', style: TextStyle(fontSize: 10.0)),
-                                SizedBox(width: 10.0),
-                                Text(DateFormat('yyyy.MM.dd (E)').format(_inDate),
-                                  style: TextStyle(fontSize: 10.0)),
-                                Text(_inTime.format(context).toString(),
-                                  style: TextStyle(fontSize: 10.0)),
-                              ],
-                            ),
-                            Row(
-                              children:[
-                                Text('OUT', style: TextStyle(fontSize: 10.0)),
-                                SizedBox(width: 10.0),
-                                Text(DateFormat('yyyy.MM.dd (E)').format(_outDate), 
-                                  style: TextStyle(fontSize: 10.0)),
-                                Text(_outTime.format(context).toString(),
-                                  style: TextStyle(fontSize: 10.0)),
-                              ],
-                            ),
-                          ],
-                        ),
+                        _switchOn ? Text('Not yet') : showDateTime(),
                       ],
                     ),
                   ],
@@ -648,7 +640,7 @@ class SearchPageState extends State<SearchPage> {
                   SizedBox(width: 10.0),
                   Text('Fee', style: TextStyle(fontWeight: FontWeight.bold)),
                   Spacer(),
-                  Text('$_fee'.substring(0,5)),
+                  Text(_fee.toStringAsFixed(2)),
                   Spacer(),
                   Text('Up to \$150', style: TextStyle(fontSize: 12.0)),
                 ],
