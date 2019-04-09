@@ -16,10 +16,11 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'favoritemodel.dart';
 import 'package:Shrine/app.dart';
+//import 'package:flutter/rendering.dart';
 
 void main(){ 
   final favorite = FavoriteList();
-
+  //debugPaintSizeEnabled=true;
   runApp(
     ScopedModel<FavoriteList>( //Provide FavoriteList to widgets in our app
       model: favorite,
