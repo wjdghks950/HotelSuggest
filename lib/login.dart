@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
-import 'signup.dart';
 import 'colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -63,7 +62,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
               obscureText: true,
             ),
-            // TODO: Add button bar (101)
             ButtonBar(
               alignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -89,10 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                           setState((){
                             _usernameController.text.isEmpty ? _validate = true : _validate = false;
                             _passwordController.text.isEmpty ? _validate = true : _validate = false;
-                            // Show the next page
-                            /* if (!_validate){
-                              Navigator.pop(context);
-                            } */
+
                             Navigator.pop(context);
                           });
                         },
